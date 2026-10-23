@@ -1,0 +1,12 @@
+{
+  "updated": "2026-10-22",
+  "status": "pending_official_data",
+  "reason": "User confirmed official MVTec bottle data has not been acquired; available models are fixture-trained.",
+  "official_test_evaluated": false,
+  "official_metrics": null,
+  "real_error_analysis": null,
+  "fixture_verification": "artifacts/fixture-evaluation-verified/outputs/evaluations/comparison/REPORT.md",
+  "configuration_freeze": "configs/frozen_comparison.json",
+  "protocol": "docs/EVALUATION.md",
+  "next_step": "Acquire official bottle data under its terms, prepare manifest, train and calibrate both frozen models, then run evaluate once."
+}

@@ -1,0 +1,594 @@
+{
+  "date": "2026-10-23",
+  "scope": "Measured CPU runtimes on synthetic software fixtures; not real MVTec quality or other-device benchmarks",
+  "runs": {
+    "onnx-normal-calibration": {
+      "mode": "synthetic_fixture_verification_normal_calibration_runtime_check",
+      "snapshot_sha256": "bb9bc5730dd453af89c8427db2dc86094715fe96e0dd9d6f2f65bea54526e772",
+      "hardware": {
+        "architecture": "arm64",
+        "cpu": "Apple M2",
+        "cpu_description": "proc 8:0:4:4",
+        "device": "cpu",
+        "logical_cpu_count": 8,
+        "memory": "16 GB",
+        "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "python": "3.14.0"
+      },
+      "versions": {
+        "Pillow": "13.0.0",
+        "numpy": "2.5.4",
+        "onnx": "1.23.2",
+        "onnxruntime": "1.31.0",
+        "onnxscript": "0.7.2",
+        "psutil": "7.2.2",
+        "torch": "2.13.0",
+        "torchvision": "0.28.0"
+      },
+      "decision_changes": 0,
+      "numerical_parity_passed": true,
+      "runtimes": {
+        "onnx": {
+          "latency": {
+            "embedding": {
+              "count": 100,
+              "max_ms": 32.353125,
+              "mean_ms": 30.6970279,
+              "min_ms": 30.120208,
+              "p50_ms": 30.629146,
+              "p95_ms": 31.00225625,
+              "reason": null
+            },
+            "end_to_end": {
+              "count": 100,
+              "max_ms": 293.173958,
+              "mean_ms": 287.51830701999995,
+              "min_ms": 284.591333,
+              "p50_ms": 287.216333,
+              "p95_ms": 289.54945354999995,
+              "reason": null
+            },
+            "preprocessing": {
+              "count": 100,
+              "max_ms": 0.877083,
+              "mean_ms": 0.7130220600000001,
+              "min_ms": 0.59025,
+              "p50_ms": 0.7210835,
+              "p95_ms": 0.8275622,
+              "reason": null
+            },
+            "scoring": {
+              "count": 100,
+              "max_ms": 261.62,
+              "mean_ms": 256.10825705999997,
+              "min_ms": 253.510958,
+              "p50_ms": 255.909625,
+              "p95_ms": 257.85417079999996,
+              "reason": null
+            }
+          },
+          "memory": {
+            "after_load_rss_bytes": 340197376,
+            "after_measurements_rss_bytes": 366297088,
+            "after_warmup_rss_bytes": 357335040,
+            "before_model_load_rss_bytes": 211648512,
+            "process_lifetime_peak_rss_bytes": 366346240
+          },
+          "quality": {
+            "image_auroc": {
+              "reason": "AUROC requires at least one positive and one negative",
+              "value": null
+            },
+            "latency": {
+              "decode_preprocess_model": {
+                "count": 20,
+                "max_ms": 289.0735,
+                "mean_ms": 286.8139415500001,
+                "min_ms": 285.46275,
+                "p50_ms": 286.6094375,
+                "p95_ms": 288.22879135,
+                "reason": null
+              },
+              "model_only": {
+                "count": 20,
+                "max_ms": 288.452084,
+                "mean_ms": 286.1829917,
+                "min_ms": 284.851833,
+                "p50_ms": 285.94068749999997,
+                "p95_ms": 287.56553544999997,
+                "reason": null
+              }
+            },
+            "operating": {
+              "defect_count": 0,
+              "defect_recall": {
+                "reason": "No defect samples",
+                "value": null
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.0
+              },
+              "fn": 0,
+              "fp": 0,
+              "normal_count": 20,
+              "sample_count": 20,
+              "tn": 20,
+              "tp": 0
+            },
+            "per_defect_type": {},
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": "No image contains both defect and background pixels",
+                "value": null
+              },
+              "eligible_images": 0,
+              "excluded_images": 20,
+              "negative_pixels": 20480,
+              "positive_pixels": 0
+            },
+            "roc": {
+              "fpr": [],
+              "reason": "ROC requires both classes",
+              "tpr": []
+            }
+          }
+        },
+        "original": {
+          "latency": {
+            "embedding": {
+              "count": 100,
+              "max_ms": 16.01375,
+              "mean_ms": 13.92546289,
+              "min_ms": 13.231292,
+              "p50_ms": 13.8039795,
+              "p95_ms": 14.883141949999999,
+              "reason": null
+            },
+            "end_to_end": {
+              "count": 100,
+              "max_ms": 282.1125,
+              "mean_ms": 270.48301671,
+              "min_ms": 267.429542,
+              "p50_ms": 270.127646,
+              "p95_ms": 275.47705210000004,
+              "reason": null
+            },
+            "preprocessing": {
+              "count": 100,
+              "max_ms": 1.145458,
+              "mean_ms": 0.7390033799999999,
+              "min_ms": 0.577667,
+              "p50_ms": 0.7371255,
+              "p95_ms": 0.86016455,
+              "reason": null
+            },
+            "scoring": {
+              "count": 100,
+              "max_ms": 266.401833,
+              "mean_ms": 255.81855044000002,
+              "min_ms": 253.168834,
+              "p50_ms": 255.53777100000002,
+              "p95_ms": 260.3715902,
+              "reason": null
+            }
+          },
+          "memory": {
+            "after_load_rss_bytes": 363069440,
+            "after_measurements_rss_bytes": 395853824,
+            "after_warmup_rss_bytes": 392806400,
+            "before_model_load_rss_bytes": 211517440,
+            "process_lifetime_peak_rss_bytes": 395853824
+          },
+          "quality": {
+            "image_auroc": {
+              "reason": "AUROC requires at least one positive and one negative",
+              "value": null
+            },
+            "latency": {
+              "decode_preprocess_model": {
+                "count": 20,
+                "max_ms": 270.55525,
+                "mean_ms": 268.63485215000003,
+                "min_ms": 267.566084,
+                "p50_ms": 268.18997950000005,
+                "p95_ms": 270.5523202,
+                "reason": null
+              },
+              "model_only": {
+                "count": 20,
+                "max_ms": 269.900125,
+                "mean_ms": 268.0112291500001,
+                "min_ms": 266.988417,
+                "p50_ms": 267.598813,
+                "p95_ms": 269.78169135,
+                "reason": null
+              }
+            },
+            "operating": {
+              "defect_count": 0,
+              "defect_recall": {
+                "reason": "No defect samples",
+                "value": null
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.0
+              },
+              "fn": 0,
+              "fp": 0,
+              "normal_count": 20,
+              "sample_count": 20,
+              "tn": 20,
+              "tp": 0
+            },
+            "per_defect_type": {},
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": "No image contains both defect and background pixels",
+                "value": null
+              },
+              "eligible_images": 0,
+              "excluded_images": 20,
+              "negative_pixels": 20480,
+              "positive_pixels": 0
+            },
+            "roc": {
+              "fpr": [],
+              "reason": "ROC requires both classes",
+              "tpr": []
+            }
+          }
+        }
+      }
+    },
+    "onnx-exposed-fixtures": {
+      "mode": "synthetic_fixture_verification_exploratory_runtime_comparison_of_previously_evaluated_test",
+      "snapshot_sha256": "a491e5297ed5a7b7dd2f9f4d04401d839e504e6f3238836049dce13172da991f",
+      "hardware": {
+        "architecture": "arm64",
+        "cpu": "Apple M2",
+        "cpu_description": "proc 8:0:4:4",
+        "device": "cpu",
+        "logical_cpu_count": 8,
+        "memory": "16 GB",
+        "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+        "python": "3.14.0"
+      },
+      "versions": {
+        "Pillow": "13.0.0",
+        "numpy": "2.5.4",
+        "onnx": "1.23.2",
+        "onnxruntime": "1.31.0",
+        "onnxscript": "0.7.2",
+        "psutil": "7.2.2",
+        "torch": "2.13.0",
+        "torchvision": "0.28.0"
+      },
+      "decision_changes": 0,
+      "numerical_parity_passed": true,
+      "runtimes": {
+        "onnx": {
+          "latency": {
+            "embedding": {
+              "count": 60,
+              "max_ms": 32.453625,
+              "mean_ms": 30.770994483333332,
+              "min_ms": 30.339167,
+              "p50_ms": 30.689104,
+              "p95_ms": 31.12224795,
+              "reason": null
+            },
+            "end_to_end": {
+              "count": 60,
+              "max_ms": 296.339,
+              "mean_ms": 288.3828936500001,
+              "min_ms": 286.0075,
+              "p50_ms": 287.396667,
+              "p95_ms": 293.7816226,
+              "reason": null
+            },
+            "preprocessing": {
+              "count": 60,
+              "max_ms": 0.801459,
+              "mean_ms": 0.7190207833333333,
+              "min_ms": 0.548167,
+              "p50_ms": 0.7242085,
+              "p95_ms": 0.77725565,
+              "reason": null
+            },
+            "scoring": {
+              "count": 60,
+              "max_ms": 264.582125,
+              "mean_ms": 256.8928783833333,
+              "min_ms": 254.514916,
+              "p50_ms": 255.983792,
+              "p95_ms": 261.24603299999995,
+              "reason": null
+            }
+          },
+          "memory": {
+            "after_load_rss_bytes": 340361216,
+            "after_measurements_rss_bytes": 366657536,
+            "after_warmup_rss_bytes": 357466112,
+            "before_model_load_rss_bytes": 211681280,
+            "process_lifetime_peak_rss_bytes": 366706688
+          },
+          "quality": {
+            "image_auroc": {
+              "reason": null,
+              "value": 0.7777777777777778
+            },
+            "latency": {
+              "decode_preprocess_model": {
+                "count": 6,
+                "max_ms": 296.339,
+                "mean_ms": 292.30129833333336,
+                "min_ms": 290.265166,
+                "p50_ms": 291.3860205,
+                "p95_ms": 295.77465625,
+                "reason": null
+              },
+              "model_only": {
+                "count": 6,
+                "max_ms": 295.616083,
+                "mean_ms": 291.66411783333336,
+                "min_ms": 289.66450000000003,
+                "p50_ms": 290.69437500000004,
+                "p95_ms": 295.09542675,
+                "reason": null
+              }
+            },
+            "operating": {
+              "defect_count": 3,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.6666666666666666
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.3333333333333333
+              },
+              "fn": 1,
+              "fp": 1,
+              "normal_count": 3,
+              "sample_count": 6,
+              "tn": 2,
+              "tp": 2
+            },
+            "per_defect_type": {
+              "fixture": {
+                "caution": "Small descriptive sample; fewer than five defects",
+                "image_auroc": {
+                  "reason": null,
+                  "value": 0.7777777777777778
+                },
+                "operating": {
+                  "defect_count": 3,
+                  "defect_recall": {
+                    "reason": null,
+                    "value": 0.6666666666666666
+                  },
+                  "false_positive_rate": {
+                    "reason": null,
+                    "value": 0.3333333333333333
+                  },
+                  "fn": 1,
+                  "fp": 1,
+                  "normal_count": 3,
+                  "sample_count": 6,
+                  "tn": 2,
+                  "tp": 2
+                },
+                "pixel_macro": {
+                  "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+                  "auroc": {
+                    "reason": null,
+                    "value": 0.9544867621527778
+                  },
+                  "eligible_images": 3,
+                  "excluded_images": 0,
+                  "negative_pixels": 2880,
+                  "positive_pixels": 192
+                }
+              }
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.9544867621527778
+              },
+              "eligible_images": 3,
+              "excluded_images": 3,
+              "negative_pixels": 5952,
+              "positive_pixels": 192
+            },
+            "roc": {
+              "fpr": [
+                0.0,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.6666666666666666,
+                0.6666666666666666,
+                1.0
+              ],
+              "reason": null,
+              "tpr": [
+                0.0,
+                0.3333333333333333,
+                0.6666666666666666,
+                0.6666666666666666,
+                0.6666666666666666,
+                1.0,
+                1.0
+              ]
+            }
+          }
+        },
+        "original": {
+          "latency": {
+            "embedding": {
+              "count": 60,
+              "max_ms": 14.808167,
+              "mean_ms": 13.906642433333335,
+              "min_ms": 13.368084,
+              "p50_ms": 13.8245415,
+              "p95_ms": 14.592125,
+              "reason": null
+            },
+            "end_to_end": {
+              "count": 60,
+              "max_ms": 278.739875,
+              "mean_ms": 270.5991340833333,
+              "min_ms": 268.727959,
+              "p50_ms": 270.1632915,
+              "p95_ms": 272.51117945,
+              "reason": null
+            },
+            "preprocessing": {
+              "count": 60,
+              "max_ms": 0.922917,
+              "mean_ms": 0.7362930000000001,
+              "min_ms": 0.518083,
+              "p50_ms": 0.7271875,
+              "p95_ms": 0.8608223,
+              "reason": null
+            },
+            "scoring": {
+              "count": 60,
+              "max_ms": 263.254291,
+              "mean_ms": 255.95619865,
+              "min_ms": 254.318625,
+              "p50_ms": 255.645792,
+              "p95_ms": 257.88439645,
+              "reason": null
+            }
+          },
+          "memory": {
+            "after_load_rss_bytes": 364183552,
+            "after_measurements_rss_bytes": 397230080,
+            "after_warmup_rss_bytes": 394051584,
+            "before_model_load_rss_bytes": 212189184,
+            "process_lifetime_peak_rss_bytes": 397230080
+          },
+          "quality": {
+            "image_auroc": {
+              "reason": null,
+              "value": 0.7777777777777778
+            },
+            "latency": {
+              "decode_preprocess_model": {
+                "count": 6,
+                "max_ms": 272.625416,
+                "mean_ms": 269.96664583333336,
+                "min_ms": 268.861334,
+                "p50_ms": 269.659125,
+                "p95_ms": 271.9417495,
+                "reason": null
+              },
+              "model_only": {
+                "count": 6,
+                "max_ms": 272.0115,
+                "mean_ms": 269.3764655,
+                "min_ms": 268.248375,
+                "p50_ms": 269.0203545,
+                "p95_ms": 271.35179175,
+                "reason": null
+              }
+            },
+            "operating": {
+              "defect_count": 3,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.6666666666666666
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.3333333333333333
+              },
+              "fn": 1,
+              "fp": 1,
+              "normal_count": 3,
+              "sample_count": 6,
+              "tn": 2,
+              "tp": 2
+            },
+            "per_defect_type": {
+              "fixture": {
+                "caution": "Small descriptive sample; fewer than five defects",
+                "image_auroc": {
+                  "reason": null,
+                  "value": 0.7777777777777778
+                },
+                "operating": {
+                  "defect_count": 3,
+                  "defect_recall": {
+                    "reason": null,
+                    "value": 0.6666666666666666
+                  },
+                  "false_positive_rate": {
+                    "reason": null,
+                    "value": 0.3333333333333333
+                  },
+                  "fn": 1,
+                  "fp": 1,
+                  "normal_count": 3,
+                  "sample_count": 6,
+                  "tn": 2,
+                  "tp": 2
+                },
+                "pixel_macro": {
+                  "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+                  "auroc": {
+                    "reason": null,
+                    "value": 0.9544867621527778
+                  },
+                  "eligible_images": 3,
+                  "excluded_images": 0,
+                  "negative_pixels": 2880,
+                  "positive_pixels": 192
+                }
+              }
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.9544867621527778
+              },
+              "eligible_images": 3,
+              "excluded_images": 3,
+              "negative_pixels": 5952,
+              "positive_pixels": 192
+            },
+            "roc": {
+              "fpr": [
+                0.0,
+                0.0,
+                0.0,
+                0.3333333333333333,
+                0.6666666666666666,
+                0.6666666666666666,
+                1.0
+              ],
+              "reason": null,
+              "tpr": [
+                0.0,
+                0.3333333333333333,
+                0.6666666666666666,
+                0.6666666666666666,
+                0.6666666666666666,
+                1.0,
+                1.0
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "amendment": "Supersedes original all-fit-patches proposal with a 4096-row seeded reservoir. Baseline and data split/preprocessing are unchanged.",
+  "baseline": {
+    "method": "rgb-mean-template-v1",
+    "score": "max mean-channel squared residual",
+    "template": "model_fit mean RGB"
+  },
+  "data_protocol": {
+    "baseline": "model_fit mean RGB template; mean-channel squared residual; max score",
+    "baseline_normalization": "RGB float32 CHW / 255",
+    "calibration_fraction": 0.2,
+    "feature_mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "feature_std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "image_resize": "Pillow bilinear, direct resize, no crop",
+    "image_size": [
+      256,
+      256
+    ],
+    "mask_resize": "Pillow nearest, binary",
+    "pretrained": "frozen ResNet18 IMAGENET1K_V1 layer2; all fit patches; L2 nearest neighbor; max score",
+    "target_fpr": 0.05,
+    "version": "bottle-v1"
+  },
+  "feature_model": {
+    "backbone": "resnet18",
+    "bank_chunk": 512,
+    "batch_size": 1,
+    "device": "cpu",
+    "distance": "Euclidean 1-NN, torch.cdist direct",
+    "embedding_dim": 128,
+    "feature_layers": [
+      "layer2"
+    ],
+    "image_score": "maximum raw patch distance",
+    "map_resize": "bilinear align_corners=False to 256x256; no smoothing",
+    "memory_bank_capacity": 4096,
+    "patch_aggregation": "none; layer2 receptive fields",
+    "patch_grid": [
+      32,
+      32
+    ],
+    "preprocessing": {
+      "input": "RGB float32 CHW /255",
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "resize": "Pillow bilinear direct no crop",
+      "size": [
+        256,
+        256
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ]
+    },
+    "query_chunk": 64,
+    "sampling": "Algorithm R reservoir; NumPy PCG64; row-major patches",
+    "sampling_seed": 42,
+    "torch_threads": 1,
+    "version": "patchcore-style-resnet18-v1",
+    "weights": "ResNet18_Weights.IMAGENET1K_V1"
+  },
+  "final_evaluation": "not run; freeze real model artifact digests and thresholds before evaluation",
+  "freeze_id": "bottle-comparison-v2-2026-10-21",
+  "seed": 42,
+  "selection_basis": "Prespecified compact backbone, CPU and bounded-memory constraints; no official test performance"
+}

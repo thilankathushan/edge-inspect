@@ -1,0 +1,12 @@
+*
+!Dockerfile
+!pyproject.toml
+!README.md
+!app.py
+!src/
+!src/**
+!.streamlit/
+!.streamlit/config.toml
+**/__pycache__
+**/*.egg-info
+!LICENSE
