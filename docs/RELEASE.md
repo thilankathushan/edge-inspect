@@ -1,6 +1,6 @@
 # Portfolio release checklist
 
-Prepared 2026-10-23. **Publication authorized; production readiness is not claimed.**
+Prepared 2026-10-23. **Published at https://github.com/thilankathushan/edge-inspect under MIT; production readiness is not claimed.**
 
 ## Complete locally
 
@@ -20,7 +20,7 @@ Prepared 2026-10-23. **Publication authorized; production readiness is not claim
 - [ ] Acquire official bottle data under its terms; record acquisition details, train/calibrate both frozen models and perform real held-out evaluation. Real accuracy and localization remain unknown.
 - [ ] Docker daemon available; build and run desired variants, verify CPU wheels and health/inference on target Linux architecture. Daemon socket was absent, so no successful image-build/runtime claim is made.
 - [x] Standalone repository initialized inside Project 2; workflow is at its repository root. Parent repository and other projects preserved.
-- [ ] Run CI remotely after authorized publication. Python 3.11/Linux matrix and clean dependency resolution are not locally verified by the Mac's Python 3.14 run.
+- [x] Remote Linux CI passed on Python 3.11 and 3.14: https://github.com/thilankathushan/edge-inspect/actions/runs/39992327495 . No dataset or large weights downloaded.
 - [ ] Record demo video using DEMO_SCRIPT.md; only screenshots currently exist.
 - [x] Public publication explicitly authorized by owner; source-only audit required before commit. No force-push or existing repository overwrite permitted.
 
