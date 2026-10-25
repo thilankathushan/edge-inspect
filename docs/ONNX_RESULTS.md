@@ -1,5 +1,7 @@
 # ONNX runtime results — 2026-10-23
 
+Historical synthetic-fixture results. Current real bottle measurements: [REAL_ONNX_RESULTS.md](REAL_ONNX_RESULTS.md).
+
 **Actual Apple M2 measurements on synthetic software fixtures only. Official MVTec bottle data is still absent.** These establish software parity and observed runtime behavior, not real defect-detection performance.
 
 Only the ResNet18 layer2 extractor was exported. Preprocessing, normalization, patch layout, torch nearest-neighbor scoring, map interpolation and the unchanged calibration threshold remain external. Fixed FP32 batch 1, 256×256, opset 18, CPUExecutionProvider, one intra/inter-op thread, sequential ORT with full graph optimization and spinning disabled. No quantization.

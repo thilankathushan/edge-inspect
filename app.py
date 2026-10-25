@@ -17,7 +17,9 @@ with st.sidebar:
     selected=st.selectbox('Saved model',range(len(models)),format_func=lambda i: ('Baseline' if models[i][1]['method'].startswith('rgb') else 'PatchCore-style')+' / '+str(models[i][0].relative_to(Path(__file__).parent/'artifacts')))
     path,meta=models[selected]
     st.write('Training provenance')
-    st.code(meta['data_kind'],language=None)
+    st.code('MVTec AD via third-party mirror' if meta.get('dataset_acquisition') else meta['data_kind'],language=None)
+    if meta.get('dataset_acquisition'):
+        st.caption('Mirror transfer verified; publisher authenticity not independently verified.')
     st.caption('Models are loaded from local artifacts. No predictions are simulated.')
 if meta['data_kind']=='synthetic_fixture':
     st.warning('Fixture-trained model — software demonstration only. Not validated on real bottle defects.')

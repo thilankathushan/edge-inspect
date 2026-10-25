@@ -23,7 +23,7 @@ def discover(root):
             if meta.get('method') in ['rgb-mean-template-v1','patchcore-style-resnet18-v1']:
                 found.append((path.parent,meta))
         except ValidationError: pass
-    return found
+    return sorted(found,key=lambda item:(item[1].get("data_kind")=="synthetic_fixture",str(item[0])))
 
 def load_model(path):
     if read_json(path/'metadata.json')['method']=='rgb-mean-template-v1':

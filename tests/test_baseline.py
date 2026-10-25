@@ -171,3 +171,13 @@ def test_invalid_manifest_cli_returns_error(run, tmp_path, capsys):
     bad.write_text('{broken')
     assert main(['train', '--config', str(config_file), '--manifest', str(bad), '--run-name', 'bad', '--data-kind', 'synthetic_fixture']) == 2
     assert 'Cannot read JSON' in capsys.readouterr().err
+
+
+def test_acquisition_provenance_is_preserved(run):
+    config, manifest=run
+    contents=read_json(manifest)
+    contents['acquisition']={'mirror':'synthetic test source','publisher_authenticity':'test fixture only'}
+    manifest.write_text(json.dumps(contents))
+    result=train(config,manifest,'provenance','synthetic_fixture')
+    metadata=read_json(Path(result['model'])/'metadata.json')
+    assert metadata['dataset_acquisition']==contents['acquisition']

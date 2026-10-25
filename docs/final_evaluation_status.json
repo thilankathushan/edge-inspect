@@ -1,12 +1,748 @@
 {
-  "updated": "2026-10-22",
-  "status": "pending_official_data",
-  "reason": "User confirmed official MVTec bottle data has not been acquired; available models are fixture-trained.",
-  "official_test_evaluated": false,
-  "official_metrics": null,
-  "real_error_analysis": null,
-  "fixture_verification": "artifacts/fixture-evaluation-verified/outputs/evaluations/comparison/REPORT.md",
-  "configuration_freeze": "configs/frozen_comparison.json",
-  "protocol": "docs/EVALUATION.md",
-  "next_step": "Acquire official bottle data under its terms, prepare manifest, train and calibrate both frozen models, then run evaluate once."
+  "status": "complete",
+  "date": "2026-10-25",
+  "provenance": "MVTec AD bottle from pinned third-party mirror; publisher authenticity not independently verified",
+  "mirror_revision": "c75b39616f84db43677bcc8228caaafaf5096d7f",
+  "manifest_sha256": "e1bbf78c4b1ecd2dbc5f0394877dfc02c753efb31ea5fcdd8b358154e60ff546",
+  "snapshot_sha256": "58dc43e4fb6793d51cf66eb9066aa06c31e90fbb3bd45df22e810af6482daf12",
+  "frozen_comparison_sha256": "2912f3b9b5eb8c4866246bcec1ce875fafd9f611814a8c7c377f98f5ac6ce71f",
+  "recorded_before_test_inference_utc": "2026-10-25T03:58:02.029088+00:00",
+  "hardware": {
+    "architecture": "arm64",
+    "cpu": "Apple M2",
+    "cpu_description": "proc 8:0:4:4",
+    "device": "cpu",
+    "logical_cpu_count": 8,
+    "memory": "16 GB",
+    "os": "macOS-27.0.1-arm64-arm-64bit-Mach-O",
+    "python": "3.14.0"
+  },
+  "runtime_versions": {
+    "Pillow": "13.0.0",
+    "matplotlib": "3.11.2",
+    "numpy": "2.5.4",
+    "torch": "2.13.0",
+    "torchvision": "0.28.0"
+  },
+  "evaluation_protocol": {
+    "decision": "score > saved normal-calibration threshold; no recalibration",
+    "image_auroc": "Exact pairwise ranking with half credit for ties; positive=defect",
+    "latency": {
+      "batch_size": 1,
+      "device": "cpu",
+      "excluded": "model load, file hashing, masks, original-size map resize, metrics, output writes and plots",
+      "image_size": [
+        256,
+        256
+      ],
+      "model_only": "model.score on prepared tensor, including feature normalization/search/map interpolation",
+      "order": "baseline then patchcore, each in manifest path order; OS caches uncontrolled; no cold-start claim",
+      "pipeline": "validation/decode/resize/normalization plus model.score; includes repeated decoder validation",
+      "repetitions_per_image": 1,
+      "timer": "perf_counter_ns",
+      "torch_threads": 1,
+      "warmup": 5,
+      "warmup_input": "first model_fit normal; excluded from timing"
+    },
+    "map_alignment": "Pillow float32 bilinear 256x256 anomaly map to original dimensions; no normalization",
+    "per_type": "Each defect type versus all shared test normals; AUROC requires >=2 of each; counts/recall whenever defined",
+    "pixel_auroc": "Exact within-image at original mask resolution; unweighted mean over images with both pixel classes; not pooled",
+    "representatives": "one median-score example per TP/FN/FP/TN/uncalibrated bucket, path tie-break; absent buckets reported",
+    "selection": "No tuning or retraining after evaluation; later reruns explicitly exploratory",
+    "undefined": "JSON null plus reason; no finite threshold means no operating decisions/counts",
+    "version": "heldout-comparison-v1"
+  },
+  "model_files": {
+    "baseline": {
+      "metadata.json": "58627d82003f563420d630a15fb7205a57553b122b12820ac231531fdf2fa203",
+      "template.npy": "95a7f0534aeed03c2e9f31588b9ec4f90fa2742dcbe3ab451e46c94d98446311"
+    },
+    "patchcore_style": {
+      "extractor.pth": "9b0bb4b41869670e71ea0b6ff8405bf5e0a031e3c3e7ee7d89f4fbd85ee51448",
+      "memory_bank.npy": "6c0ac541bcccc9d45ef1cf8b00dbf661e55a7c596b429f6bb45ba19b7ead3b12",
+      "metadata.json": "e5889dcdad1729c763e4a4daa2090a930f0e4a4130754d7abcbf40b594258c63"
+    }
+  },
+  "models": {
+    "baseline": {
+      "calibration_count": 42,
+      "threshold": 0.3748110830783844,
+      "summary": {
+        "image_auroc": {
+          "reason": null,
+          "value": 0.8595238095238096
+        },
+        "latency": {
+          "decode_preprocess_model": {
+            "count": 83,
+            "max_ms": 24.726459,
+            "mean_ms": 21.960954301204815,
+            "min_ms": 21.041333,
+            "p50_ms": 21.793666,
+            "p95_ms": 23.4181295,
+            "reason": null
+          },
+          "model_only": {
+            "count": 83,
+            "max_ms": 0.214625,
+            "mean_ms": 0.16463351807228918,
+            "min_ms": 0.146166,
+            "p50_ms": 0.159583,
+            "p95_ms": 0.2027375,
+            "reason": null
+          }
+        },
+        "operating": {
+          "defect_count": 63,
+          "defect_recall": {
+            "reason": null,
+            "value": 0.7301587301587301
+          },
+          "false_positive_rate": {
+            "reason": null,
+            "value": 0.05
+          },
+          "fn": 17,
+          "fp": 1,
+          "normal_count": 20,
+          "sample_count": 83,
+          "tn": 19,
+          "tp": 46
+        },
+        "per_defect_type": {
+          "broken_large": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.9675
+            },
+            "operating": {
+              "defect_count": 20,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.8
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.05
+              },
+              "fn": 4,
+              "fp": 1,
+              "normal_count": 20,
+              "sample_count": 40,
+              "tn": 19,
+              "tp": 16
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.8367125407625087
+              },
+              "eligible_images": 20,
+              "excluded_images": 0,
+              "negative_pixels": 14304204,
+              "positive_pixels": 1895796
+            }
+          },
+          "broken_small": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.9931818181818182
+            },
+            "operating": {
+              "defect_count": 22,
+              "defect_recall": {
+                "reason": null,
+                "value": 1.0
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.05
+              },
+              "fn": 0,
+              "fp": 1,
+              "normal_count": 20,
+              "sample_count": 42,
+              "tn": 19,
+              "tp": 22
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.8559292987965506
+              },
+              "eligible_images": 22,
+              "excluded_images": 0,
+              "negative_pixels": 17273238,
+              "positive_pixels": 546762
+            }
+          },
+          "contamination": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.6166666666666667
+            },
+            "operating": {
+              "defect_count": 21,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.38095238095238093
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.05
+              },
+              "fn": 13,
+              "fp": 1,
+              "normal_count": 20,
+              "sample_count": 41,
+              "tn": 19,
+              "tp": 8
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.8188924467801652
+              },
+              "eligible_images": 21,
+              "excluded_images": 0,
+              "negative_pixels": 15565827,
+              "positive_pixels": 1444173
+            }
+          }
+        },
+        "pixel_macro": {
+          "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+          "auroc": {
+            "reason": null,
+            "value": 0.8374831233517106
+          },
+          "eligible_images": 63,
+          "excluded_images": 20,
+          "negative_pixels": 63343269,
+          "positive_pixels": 3886731
+        },
+        "roc": {
+          "fpr": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.1,
+            0.1,
+            0.1,
+            0.15,
+            0.15,
+            0.2,
+            0.25,
+            0.25,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.4,
+            0.45,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.7,
+            0.7,
+            0.7,
+            0.75,
+            0.75,
+            0.8,
+            0.8,
+            0.8,
+            0.85,
+            0.85,
+            0.9,
+            0.9,
+            0.95,
+            0.95,
+            1.0
+          ],
+          "reason": null,
+          "tpr": [
+            0.0,
+            0.015873015873015872,
+            0.031746031746031744,
+            0.047619047619047616,
+            0.06349206349206349,
+            0.07936507936507936,
+            0.09523809523809523,
+            0.1111111111111111,
+            0.12698412698412698,
+            0.14285714285714285,
+            0.15873015873015872,
+            0.1746031746031746,
+            0.19047619047619047,
+            0.20634920634920634,
+            0.2222222222222222,
+            0.23809523809523808,
+            0.25396825396825395,
+            0.2698412698412698,
+            0.2857142857142857,
+            0.30158730158730157,
+            0.31746031746031744,
+            0.3333333333333333,
+            0.3492063492063492,
+            0.36507936507936506,
+            0.38095238095238093,
+            0.3968253968253968,
+            0.4126984126984127,
+            0.42857142857142855,
+            0.4444444444444444,
+            0.4603174603174603,
+            0.47619047619047616,
+            0.49206349206349204,
+            0.5079365079365079,
+            0.5238095238095238,
+            0.5396825396825397,
+            0.5555555555555556,
+            0.5714285714285714,
+            0.5873015873015873,
+            0.6031746031746031,
+            0.6190476190476191,
+            0.6190476190476191,
+            0.6349206349206349,
+            0.6507936507936508,
+            0.6666666666666666,
+            0.6825396825396826,
+            0.6984126984126984,
+            0.7142857142857143,
+            0.7301587301587301,
+            0.746031746031746,
+            0.7619047619047619,
+            0.7619047619047619,
+            0.7777777777777778,
+            0.7936507936507936,
+            0.7936507936507936,
+            0.8095238095238095,
+            0.8095238095238095,
+            0.8095238095238095,
+            0.8253968253968254,
+            0.8412698412698413,
+            0.8412698412698413,
+            0.8412698412698413,
+            0.8412698412698413,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.8571428571428571,
+            0.873015873015873,
+            0.8888888888888888,
+            0.9047619047619048,
+            0.9047619047619048,
+            0.9206349206349206,
+            0.9206349206349206,
+            0.9365079365079365,
+            0.9523809523809523,
+            0.9523809523809523,
+            0.9682539682539683,
+            0.9682539682539683,
+            0.9841269841269841,
+            0.9841269841269841,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    },
+    "patchcore_style": {
+      "calibration_count": 42,
+      "threshold": 3.768542766571045,
+      "summary": {
+        "image_auroc": {
+          "reason": null,
+          "value": 0.946031746031746
+        },
+        "latency": {
+          "decode_preprocess_model": {
+            "count": 83,
+            "max_ms": 448.591708,
+            "mean_ms": 296.4220079879519,
+            "min_ms": 288.573958,
+            "p50_ms": 292.237875,
+            "p95_ms": 321.0358414,
+            "reason": null
+          },
+          "model_only": {
+            "count": 83,
+            "max_ms": 400.72325,
+            "mean_ms": 274.1214733855422,
+            "min_ms": 266.885458,
+            "p50_ms": 270.550042,
+            "p95_ms": 297.1225086,
+            "reason": null
+          }
+        },
+        "operating": {
+          "defect_count": 63,
+          "defect_recall": {
+            "reason": null,
+            "value": 0.9206349206349206
+          },
+          "false_positive_rate": {
+            "reason": null,
+            "value": 0.1
+          },
+          "fn": 5,
+          "fp": 2,
+          "normal_count": 20,
+          "sample_count": 83,
+          "tn": 18,
+          "tp": 58
+        },
+        "per_defect_type": {
+          "broken_large": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.9375
+            },
+            "operating": {
+              "defect_count": 20,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.95
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.1
+              },
+              "fn": 1,
+              "fp": 2,
+              "normal_count": 20,
+              "sample_count": 40,
+              "tn": 18,
+              "tp": 19
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.9731340152541769
+              },
+              "eligible_images": 20,
+              "excluded_images": 0,
+              "negative_pixels": 14304204,
+              "positive_pixels": 1895796
+            }
+          },
+          "broken_small": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.9613636363636363
+            },
+            "operating": {
+              "defect_count": 22,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.9545454545454546
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.1
+              },
+              "fn": 1,
+              "fp": 2,
+              "normal_count": 20,
+              "sample_count": 42,
+              "tn": 18,
+              "tp": 21
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.9929376385823215
+              },
+              "eligible_images": 22,
+              "excluded_images": 0,
+              "negative_pixels": 17273238,
+              "positive_pixels": 546762
+            }
+          },
+          "contamination": {
+            "caution": "Descriptive results; shared normal denominator across defect types",
+            "image_auroc": {
+              "reason": null,
+              "value": 0.9380952380952381
+            },
+            "operating": {
+              "defect_count": 21,
+              "defect_recall": {
+                "reason": null,
+                "value": 0.8571428571428571
+              },
+              "false_positive_rate": {
+                "reason": null,
+                "value": 0.1
+              },
+              "fn": 3,
+              "fp": 2,
+              "normal_count": 20,
+              "sample_count": 41,
+              "tn": 18,
+              "tp": 18
+            },
+            "pixel_macro": {
+              "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+              "auroc": {
+                "reason": null,
+                "value": 0.9366842707782839
+              },
+              "eligible_images": 21,
+              "excluded_images": 0,
+              "negative_pixels": 15565827,
+              "positive_pixels": 1444173
+            }
+          }
+        },
+        "pixel_macro": {
+          "aggregation": "Unweighted mean of exact within-image AUROCs at original resolution; not pooled pixel AUROC",
+          "auroc": {
+            "reason": null,
+            "value": 0.9678996514323583
+          },
+          "eligible_images": 63,
+          "excluded_images": 20,
+          "negative_pixels": 63343269,
+          "positive_pixels": 3886731
+        },
+        "roc": {
+          "fpr": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.05,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.1,
+            0.15,
+            0.15,
+            0.15,
+            0.2,
+            0.25,
+            0.3,
+            0.35,
+            0.4,
+            0.45,
+            0.5,
+            0.5,
+            0.55,
+            0.6,
+            0.65,
+            0.7,
+            0.75,
+            0.8,
+            0.85,
+            0.9,
+            0.95,
+            1.0
+          ],
+          "reason": null,
+          "tpr": [
+            0.0,
+            0.015873015873015872,
+            0.031746031746031744,
+            0.047619047619047616,
+            0.06349206349206349,
+            0.07936507936507936,
+            0.09523809523809523,
+            0.1111111111111111,
+            0.12698412698412698,
+            0.14285714285714285,
+            0.15873015873015872,
+            0.1746031746031746,
+            0.19047619047619047,
+            0.20634920634920634,
+            0.2222222222222222,
+            0.23809523809523808,
+            0.25396825396825395,
+            0.2698412698412698,
+            0.2857142857142857,
+            0.30158730158730157,
+            0.31746031746031744,
+            0.3333333333333333,
+            0.3492063492063492,
+            0.36507936507936506,
+            0.38095238095238093,
+            0.3968253968253968,
+            0.4126984126984127,
+            0.42857142857142855,
+            0.4444444444444444,
+            0.4603174603174603,
+            0.47619047619047616,
+            0.47619047619047616,
+            0.49206349206349204,
+            0.5079365079365079,
+            0.5238095238095238,
+            0.5396825396825397,
+            0.5555555555555556,
+            0.5714285714285714,
+            0.5873015873015873,
+            0.6031746031746031,
+            0.6031746031746031,
+            0.6190476190476191,
+            0.6349206349206349,
+            0.6507936507936508,
+            0.6666666666666666,
+            0.6825396825396826,
+            0.6984126984126984,
+            0.7142857142857143,
+            0.7301587301587301,
+            0.746031746031746,
+            0.7619047619047619,
+            0.7777777777777778,
+            0.7936507936507936,
+            0.8095238095238095,
+            0.8253968253968254,
+            0.8412698412698413,
+            0.8571428571428571,
+            0.873015873015873,
+            0.8888888888888888,
+            0.9047619047619048,
+            0.9206349206349206,
+            0.9365079365079365,
+            0.9523809523809523,
+            0.9523809523809523,
+            0.9682539682539683,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            0.9841269841269841,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        }
+      }
+    }
+  }
 }

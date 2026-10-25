@@ -4,6 +4,9 @@ Decision date: 2026-10-21. Dataset: **original MVTec AD**, category **bottle** (
 
 ## Acquisition and rights
 
+**2026-10-25 amendment:** After the official link failed, the user explicitly authorized bottle-only acquisition from a pinned third-party mirror. This supersedes the earlier official-source-only acquisition restriction below, without changing preprocessing, splits or model settings. See [acquisition record](DATA_ACQUISITION.md) for hashes, provenance and authentication limits.
+
+
 Verified 2026-10-21 against the [official MVTec AD page](https://www.mvtec.com/research-teaching/datasets/mvtec-ad) and [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/) ([legal code](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode.en)). This is not MVTec AD 2.
 
 The current official download mechanism is a form requiring first name, last name, email, and a checkbox acknowledging non-commercial use, followed by “Submit and continue to download page”. The newsletter checkbox is optional. No form was submitted, personal data sent, or terms acknowledged. The download page behind the form has not been reached: category-only availability, archive URL, size, and any additional terms remain unverified. Do not use guessed legacy URLs or third-party mirrors as a substitute for an official bottle-only source. If only a large full archive is offered, explain its size and disk requirements before downloading. No dataset was downloaded in this milestone.

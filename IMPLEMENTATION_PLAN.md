@@ -39,3 +39,9 @@ Add image/camera demo, controlled blur/lighting tests and reproducible commands.
 ## Portfolio deliverables
 
 README with architecture and setup; reproducible evaluation command; baseline comparison; error analysis; screenshot/demo; short case study describing engineering decisions and limitations. Results are added only after experiments run.
+
+## Completed portfolio scope — 2026-10-25
+
+Milestones 1–5 now have implemented source, a real frozen bottle comparison, normal-only calibration, CPU runtime/export evidence, a local demo, deployment checks and public release documentation. Current evidence and exact verification gates are in docs/RELEASE.md; dated development history remains in PROGRESS.md.
+
+The initial proposal's cold-start benchmarking, controlled blur/lighting study and camera experiments are not part of the verified release. Timings explicitly cover warm inference; no robustness or camera reliability is claimed. These are optional exploratory extensions, alongside quantization, other hardware and public hosting. Any test-informed model improvement requires a separate exploratory record and new held-out data for confirmatory evaluation. Dataset publisher authentication and weight redistribution rights remain limitations that engineering tests cannot resolve.

@@ -156,6 +156,7 @@ def train_features(config: Config, manifest_path: Path, run_name: str, data_kind
             'provenance_note': 'User-declared dataset origin; official torchvision pretrained weights verified by hash prefix',
             'weights': {'source': WEIGHT_URL, 'sha256': source_hash, 'license_status': WEIGHT_LICENSE},
             'manifest_sha256': sha256_file(manifest_path),
+            'dataset_acquisition': manifest.get('acquisition'),
             'versions': {name: version(name) for name in ['numpy', 'Pillow', 'torch', 'torchvision']},
             'python_version': platform.python_version(),
             'implementation_sha256': {p.name: sha256_file(p) for p in sorted(Path(__file__).parent.glob('*.py'))},

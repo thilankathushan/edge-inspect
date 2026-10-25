@@ -12,7 +12,7 @@ for name in filter(None,files):
     if p.suffix.lower() in {'.pth','.pt','.onnx','.npy','.npz','.zip','.gz','.tar','.ckpt','.safetensors'}:
         problems.append((name,'model/data/archive file'))
     if p.stat().st_size>5*1024*1024: problems.append((name,'file exceeds 5 MiB'))
-    if p.suffix.lower() in {'.jpg','.jpeg','.png'} and not name.startswith('docs/screenshots/'):
+    if p.suffix.lower() in {'.jpg','.jpeg','.png','.gif','.webp'} and not name.startswith('docs/screenshots/'):
         problems.append((name,'image outside reviewed screenshots'))
     try: text=p.read_text()
     except (UnicodeError,OSError): continue

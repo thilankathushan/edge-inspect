@@ -1,6 +1,6 @@
 # Frozen evaluation protocol and current status
 
-**2026-10-22: real evaluation pending — official bottle data is unavailable.** The user confirmed it has not been acquired. Saved development models use synthetic fixtures. No official AUROC, recall, FPR, localization result, real-data latency, or real failure analysis is available. Fixture outputs demonstrate software behavior only.
+**2026-10-25: real frozen evaluation complete.** See [results and error analysis](REAL_RESULTS.md), [pre-run record](REAL_EVALUATION_PROTOCOL.md), and [mirror provenance](DATA_ACQUISITION.md). The test split is now exposed; subsequent runs are exploratory.
 
 ## Before opening held-out results
 
@@ -20,12 +20,12 @@ Official attempts are registered in `artifacts/evaluations/heldout-ledger`. Reus
 
 ## Latency boundaries
 
-CPU, RGB 256×256, batch size one, one PyTorch thread. Five warmup calls use the first model-fit normal, never a selected test example. Each test image is measured once in manifest path order, baseline first then features. `perf_counter_ns` records score-only time and validation/decode/resize plus score time. Score-only includes feature normalization, nearest-neighbor search and map interpolation. Hash checks, model loading, masks, original-resolution map resizing, metrics, plotting and output writes are excluded. Decoder validation is included in pipeline timing. File caches are warm/uncontrolled; results are not cold-start latency. Report p50/p95/mean and retain every measurement. Hardware/OS/library versions are recorded. This is not a total-memory benchmark; peak RSS measurement remains future work.
+CPU, RGB 256×256, batch size one, one PyTorch thread. Five warmup calls use the first model-fit normal, never a selected test example. Each test image is measured once in manifest path order, baseline first then features. `perf_counter_ns` records score-only time and validation/decode/resize plus score time. Score-only includes feature normalization, nearest-neighbor search and map interpolation. Hash checks, model loading, masks, original-resolution map resizing, metrics, plotting and output writes are excluded. Decoder validation is included in pipeline timing. File caches are warm/uncontrolled; results are not cold-start latency. Report p50/p95/mean and retain every measurement. Hardware/OS/library versions are recorded. This is not a total-memory benchmark; separate process-RSS measurements are reported in REAL_ONNX_RESULTS.md.
 
 ## Outputs and error analysis
 
 Each unused run directory contains the pre-run snapshot, manifest, status, `results.json`, per-model `predictions.jsonl`, raw maps, `comparison.png`, `scores.png`, and `REPORT.md`. One median-score example per TP/FN/FP/TN (or uncalibrated) bucket is chosen deterministically, with path tie-breaking. Empty buckets are explicitly absent. Overlays show original input, original mask and labeled anomaly map. Display scales use the baseline's fixed residual range or feature calibration threshold, never test-derived optimization.
 
-Reports describe observed errors and localization diagnostics (within-image AUROC, region means, whether the maximum lies in the mask). Possible illumination/alignment/resize causes are clearly hypotheses; the report cannot establish causality. No real missed-defect or false-positive analysis can be written until real evaluation is run. Later improvements must be separately labeled exploratory.
+Reports describe observed errors and localization diagnostics (within-image AUROC, region means, whether the maximum lies in the mask). Possible illumination/alignment/resize causes are clearly hypotheses; the report cannot establish causality. The completed real error analysis is in REAL_RESULTS.md. Later improvements must be separately labeled exploratory.
 
 Metric definition reference: [official AUROC documentation](https://scikit-learn.org/stable/modules/generated/sklearn.metrics.roc_auc_score.html); implementation here uses NumPy and exact tie-aware ranks, without a scikit-learn dependency. Plotting uses [Matplotlib](https://matplotlib.org/stable/users/installing/index.html).

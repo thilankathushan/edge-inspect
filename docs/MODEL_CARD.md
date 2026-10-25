@@ -10,15 +10,18 @@ Local exploration of one controlled object category, original MVTec AD bottle. O
 
 Classical model: spatial mean RGB template and maximum squared residual. Learned model: frozen ImageNet-pretrained ResNet18 layer2, 4096-patch seeded reservoir, exact chunked Euclidean nearest-neighbor scoring. This is PatchCore-style, not the original coreset method. Fixed RGB 256×256 direct resize; learned features use fixed ImageNet normalization. CPU is supported. ONNX exports the backbone only.
 
-Intended dataset protocol: only official train/good images, deterministically divided into 80% model-fit and 20% normal calibration (rounding documented in DATA_PROTOCOL.md), seed 42. Calibration never enters the template or bank. Threshold uses the fixed 5% target-FPR order-statistic rule and strict greater-than decisions. Fewer than 19 calibration examples cannot provide a finite threshold. Target FPR is not measured deployment FPR.
+Implemented dataset protocol: only official train/good images, deterministically divided into 80% model-fit and 20% normal calibration (rounding documented in DATA_PROTOCOL.md), seed 42. Calibration never enters the template or bank. Threshold uses the fixed 5% target-FPR order-statistic rule and strict greater-than decisions. Fewer than 19 calibration examples cannot provide a finite threshold. Target FPR is not measured deployment FPR.
 
-**Current artifacts are trained on synthetic software fixtures. Official bottle data has not been acquired, so real training and held-out evaluation are absent.** Pretrained backbone weights are real downloaded torchvision weights; fixture predictions are actual inference, not fabricated model output.
+The real artifacts use 167 bottle normals for fitting and 42 separate normals for calibration. Original MVTec AD bottle was obtained via the pinned third-party mirror in DATA_ACQUISITION.md; transfer integrity is verified, publisher authenticity is not. Baseline threshold 0.3748110830783844; feature threshold 3.768542766571045. Pretrained backbone weights are torchvision ResNet18 IMAGENET1K_V1. Artifact/manifest hashes are in final_evaluation_status.json. Historical fixture artifacts remain clearly labeled.
 
 ## Evaluation evidence
 
-All official test images remain reserved. The evaluator records manifest/model hashes and thresholds before inference, reports image AUROC, confusion counts, recall/FPR, per-defect results and macro within-image pixel AUROC at original mask resolution. The latter is not pooled pixel AUROC. Undefined metrics include reasons. Subsequent test-informed runs are exploratory.
+The frozen first evaluation used all 83 test images (63 defects, 20 normals). Baseline image AUROC 0.8595, recall 46/63 (73.02%), FPR 1/20 (5%); PatchCore-style AUROC 0.9460, recall 58/63 (92.06%), FPR 2/20 (10%). Macro per-image original-resolution pixel AUROC is 0.8375 versus 0.9679 over 63 eligible anomalous images; 20 normals are undefined/excluded. This is not pooled pixel AUROC. Per-type counts and inspected error analysis are in REAL_RESULTS.md.
 
-Fixture evaluations test software behavior only. Apple M2 runtime measurements found the ONNX extractor path slower end-to-end (calibration-fixture p50 287.2 vs 270.1 ms), with lower whole-process peak RSS (349.4 vs 377.5 MiB). No decisions changed across 26 checked fixtures. See ONNX_RESULTS.md for sample counts, p95, versions and boundaries. No claim of real defect accuracy, edge-device performance or statistical superiority follows.
+Models, preprocessing and thresholds were frozen before test inference. No retuning followed these results. The test split is now exposed; later runtime comparisons are labeled accordingly. The learned model improves overall ranking/recall/localization with more false positives and substantially greater CPU latency. Small samples, shared image conditions and mirror provenance limit external conclusions.
+
+Real-data M2 CPU runtime results and numerical/decision parity are in REAL_ONNX_RESULTS.md. Only the extractor is ONNX; external nearest-neighbor search still requires PyTorch. Historical fixture timings are retained separately in ONNX_RESULTS.md. No camera or other-device result is claimed.
+
 
 ## Limitations and safeguards
 

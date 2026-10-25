@@ -120,6 +120,7 @@ def train(config: Config, manifest_path: Path, run_name: str, data_kind: str) ->
             'protocol': PROTOCOL, 'seed': config.seed,
             'data_kind': data_kind, 'provenance_note': 'User-declared input origin, not independently authenticated',
             'manifest_sha256': sha256_file(manifest_path),
+            'dataset_acquisition': manifest.get('acquisition'),
             'versions': {'python': platform.python_version(), 'numpy': version('numpy'), 'pillow': version('Pillow')},
             'implementation_sha256': {p.name: sha256_file(p) for p in sorted(Path(__file__).parent.glob('*.py'))},
             'fit_count': len(fit), 'fit_records': [{'path': r['path'], 'sha256': r['sha256']} for r in fit],

@@ -54,7 +54,7 @@ Each worker records psutil process RSS before model load, after load, after warm
 
 Each ignored `artifacts/benchmarks/<run-name>` includes the pre-run snapshot/job, separate worker logs/results, per-image embeddings/maps, raw per-repeat timing/score samples, aggregate JSON, parity details and a Markdown report. Preserve these with the exact source artifacts. Exported files remain outside Git and inherit the unresolved pretrained-weight licensing limitations documented in PATCHCORE_STYLE.md.
 
-Official bottle data remains unavailable. The measured runs use synthetic software fixtures on the actual Apple M2 Mac; see [the recorded results](ONNX_RESULTS.md). These are real runtime observations on synthetic inputs, not real MVTec quality results, Raspberry Pi results, MPS results or other edge-device results.
+Real bottle training, frozen evaluation and runtime comparison are complete; see [real-data runtime results](REAL_ONNX_RESULTS.md). [Earlier synthetic-fixture measurements](ONNX_RESULTS.md) remain historical software checks. All runs use the actual M2 CPU; none establish Raspberry Pi, GPU or other-device performance.
 
 Quantization is deferred. It changes embeddings relative to the retained FP32 memory bank and may change calibration decisions; it needs a separate, normal-only calibration protocol and separately disclosed quality evaluation. There is no assumed benefit from adding it now.
 
