@@ -2,7 +2,7 @@
 
 A local visual anomaly-detection project by **Thilanka Thushan**: compare a transparent RGB-template baseline with a compact PatchCore-style detector, explain scores with spatial heatmaps, and measure CPU inference rather than assuming an export makes it faster.
 
-**Portfolio release with real-data evaluation.** The original MVTec AD bottle category was acquired from a pinned third-party mirror after the publisher download failed. Transfer integrity is verified; publisher authenticity is not independently verified. The demo runs **locally**, not on a public service. This is an engineering prototype, not production-validated inspection.
+**Portfolio release with real-data evaluation.** The original MVTec AD bottle category was acquired from a pinned third-party mirror after the publisher download failed. Transfer integrity is verified; publisher authenticity is not independently verified. The [public demo](https://edge-inspect-demo.onrender.com) runs a clearly labeled synthetic-fixture baseline and displays the real evaluation results separately. Real bottle-model inference remains available locally. This is an engineering prototype, not production-validated inspection.
 
 [Results and error analysis](docs/REAL_RESULTS.md) · [Runtime comparison](docs/REAL_ONNX_RESULTS.md) · [Model card](docs/MODEL_CARD.md) · [Case study](docs/CASE_STUDY.md) · [Release checklist](docs/RELEASE.md)
 
@@ -164,7 +164,7 @@ docker compose up -d
 docker compose down
 ```
 
-[Deployment verification and limits](docs/DEPLOYMENT.md). The demo discovers trusted saved artifacts, prioritizes real-data models, validates PNG/JPEG uploads up to 10 MiB, and displays original/heatmap/overlay, score, threshold, decision and defined single-call timing. Model loading and rendering are outside that timer. Missing models and invalid input produce guidance rather than fabricated predictions. Upload staging is temporary. The app binds locally and has no camera input or public hosting.
+[Deployment verification and limits](docs/DEPLOYMENT.md). The demo discovers trusted saved artifacts, prioritizes real-data models, validates PNG/JPEG uploads up to 10 MiB, and displays original/heatmap/overlay, score, threshold, decision and defined single-call timing. Model loading and rendering are outside that timer. Missing models and invalid input produce guidance rather than fabricated predictions. Upload staging is temporary. The default app binds locally and has no camera input. The hosted fixture-only mode is described below.
 
 Heatmap intensity is distance/residual strength, **not probability** or a calibrated segmentation. Geometry samples are original program-generated CC0 images, visibly labeled as out of category. They illustrate UI behavior, not bottle detection quality. Screenshots/recording use only these permitted pixels; no MVTec photos are published.
 
@@ -183,7 +183,7 @@ Heatmap intensity is distance/residual strength, **not probability** or a calibr
 
 Tests cover configuration, corrupt inputs/masks, split leakage, deterministic scores, artifact round trips, known-answer metrics, export/runtime parity and demo states. Optional feature tests use explicitly cached weights, never download. Lightweight GitHub CI runs without them. [Release checklist](docs/RELEASE.md) records exact checks; [PROGRESS.md](PROGRESS.md) retains the dated history.
 
-Remaining limitations: third-party dataset provenance; small single-category evaluation; sensitivity to pose/lighting/background; coarse localization; no production/load/security validation; weight redistribution rights unresolved. Public hosting, camera validation, quantization and other hardware are optional future work, not claims of this release. Code is [MIT licensed](LICENSE); [data/method/weight attribution](docs/ATTRIBUTION.md) remains separate.
+Remaining limitations: third-party dataset provenance; small single-category evaluation; sensitivity to pose/lighting/background; coarse localization; no production/load/security validation; weight redistribution rights unresolved. Camera validation, quantization and other hardware are optional future work, not claims of this release. Code is [MIT licensed](LICENSE); [data/method/weight attribution](docs/ATTRIBUTION.md) remains separate.
 
 On the author's workspace, Edge Inspect is served at http://127.0.0.1:8503 to avoid an existing app on 8501. Use `--server.port 8503` with the native startup command when needed.
 
@@ -191,4 +191,8 @@ For the actual local run described in this repository, the official-download red
 
 ## Free public demo deployment
 
-A [Render Free configuration](render.yaml) is included. It generates a labeled synthetic-fixture baseline and displays the real frozen evaluation results separately; it does not ship or download the real bottle models. See [deployment instructions](docs/DEPLOYMENT.md#free-render-public-demo). Set `EDGE_INSPECT_PUBLIC_DEMO=1` for this mode. No live public URL is claimed until deployment is verified.
+A [Render Free configuration](render.yaml) is included. It generates a labeled synthetic-fixture baseline and displays the real frozen evaluation results separately; it does not ship or download the real bottle models. See [deployment instructions](docs/DEPLOYMENT.md#free-render-public-demo). Set `EDGE_INSPECT_PUBLIC_DEMO=1` for this mode. **Live:** [edge-inspect-demo.onrender.com](https://edge-inspect-demo.onrender.com). Health and synthetic-sample inference were verified on 2026-10-26. Select the generated sample and click **Run inspection**. Free hosting may take time to wake after inactivity.
+
+![Verified public fixture inspection](docs/screenshots/public-demo.png)
+
+This screenshot contains generated geometry only. Its single-call timing is a smoke-check observation, not a Render benchmark.

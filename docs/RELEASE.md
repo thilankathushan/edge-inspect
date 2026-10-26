@@ -1,8 +1,10 @@
-# Portfolio release status — 2026-10-25
+# Portfolio release status — 2026-10-26
 
-**Published source repository:** [github.com/thilankathushan/edge-inspect](https://github.com/thilankathushan/edge-inspect), public `main`. Source license: MIT. Code, tests, aggregate plots, documentation and permitted UI assets are published; datasets and model artifacts are excluded. The demo is local, not hosted publicly. This release makes no production-readiness claim.
+**Published source repository:** [github.com/thilankathushan/edge-inspect](https://github.com/thilankathushan/edge-inspect), public `main`. Source license: MIT. Code, tests, aggregate plots, documentation and permitted UI assets are published; datasets and model artifacts are excluded. A [public fixture demo](https://edge-inspect-demo.onrender.com) is hosted on Render; real model inference remains local. This release makes no production-readiness claim.
 
 ## Completed
+
+- [x] Render public fixture demo: HTTPS health, provenance warnings, real-results table and generated-sample inference verified on 2026-10-26.
 
 - [x] Configurable package, validator, hashed manifest, deterministic model-fit / normal-calibration split and held-out guard.
 - [x] Frozen RGB-template baseline and bounded ResNet18 PatchCore-style model trained on 167 fit-only normals. Both use 42 separate calibration normals; thresholds saved before test inference.
@@ -23,7 +25,7 @@ Pretrained ResNet18 weights come from torchvision. A separate weight-specific re
 
 The evaluation uses one category and modest samples. The 42-image calibration sample produced a 5% target-FPR threshold, but test FPR was 5% for the baseline and 10% for PatchCore-style (one and two false alarms among only 20 normal tests). The test set has been viewed and must not be presented as untouched again. Test-informed improvements need a distinct new test set for confirmatory claims.
 
-ONNX only contains the feature extractor and was slower end-to-end. RSS is whole-worker process memory; timing is warm, single-thread CPU. No camera, quantization, MPS, Raspberry Pi, other edge hardware, production security, robustness, load, or deployment-service tests are claimed. The captured GIF is a silent sequence of actual UI states, not a continuous narrated recording.
+ONNX only contains the feature extractor and was slower end-to-end. RSS is whole-worker process memory; timing is warm, single-thread CPU. No camera, quantization, MPS, Raspberry Pi, other edge hardware, production security, robustness, load, or deployment-service load tests are claimed. The captured GIF is a silent sequence of actual UI states, not a continuous narrated recording.
 
 Both images built and actual model inference smoke checks passed. On 2026-10-26 Docker Desktop resumed: the existing test container reported `running healthy` and its loopback port 8502 health endpoint returned `ok`. The individual Docker container path is verified; a separate Compose lifecycle check is not claimed. Native Streamlit browser use passed on loopback port 8503.
 
