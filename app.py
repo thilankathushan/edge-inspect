@@ -1,16 +1,36 @@
 """Start with .venv/bin/streamlit run app.py"""
+import os
+import json
 from pathlib import Path
 import streamlit as st
 from edge_inspect.demo import discover,load_model,inspect_upload,sample
 from edge_inspect.config import ValidationError
 st.set_page_config(page_title='Edge Inspect',page_icon='◈',layout='wide')
-st.caption('EDGE INSPECT  /  LOCAL VISUAL INSPECTION')
+hosted = os.environ.get('EDGE_INSPECT_PUBLIC_DEMO') == '1'
+st.caption('EDGE INSPECT  /  ' + ('PUBLIC SOFTWARE DEMO' if hosted else 'LOCAL VISUAL INSPECTION'))
 st.title('See where an image differs.')
 st.markdown('Explore saved anomaly detectors with a score, spatial evidence, and a calibrated decision.')
+if hosted:
+    st.warning('Public software demo: the interactive model is trained on generated fixtures. Real bottle evaluation results below come from a separate frozen experiment.')
+    st.caption('Uploads are processed on this hosting service. Use non-sensitive images; uploads are not intentionally saved to a permanent archive. Free hosting may sleep or respond slowly.')
+    with st.expander('Real bottle evaluation — measured results', expanded=True):
+        report=json.loads((Path(__file__).parent/'docs/final_evaluation_status.json').read_text())
+        rows=[]
+        for label, entry in report['models'].items():
+            summary=entry['summary']; operating=summary['operating']
+            rows.append({'Model':label,'Image AUROC':round(summary['image_auroc']['value'],4),
+                         'Defects detected':f"{operating['tp']}/{operating['defect_count']}",
+                         'False alarms':f"{operating['fp']}/{operating['normal_count']}",
+                         'Pixel macro AUROC':round(summary['pixel_macro']['auroc']['value'],4)})
+        st.table(rows)
+        st.caption('167 fit normals / 42 calibration normals / 83 test images. Original MVTec AD bottle via a pinned third-party mirror; publisher authenticity unverified. Pixel AUROC is macro per-image, not pooled. These are not results of the interactive fixture model.')
+        st.markdown('[Full evaluation and limitations](https://github.com/thilankathushan/edge-inspect/blob/main/docs/REAL_RESULTS.md) · [CPU runtime comparison](https://github.com/thilankathushan/edge-inspect/blob/main/docs/REAL_ONNX_RESULTS.md)')
 models=discover(Path(__file__).parent/'artifacts')
+if hosted:
+    models=[(path,meta) for path,meta in models if meta.get('data_kind')=='synthetic_fixture' and meta.get('method')=='rgb-mean-template-v1']
 with st.sidebar:
     st.header('Inspection setup')
-    st.caption('CPU inference · local session · bottle category')
+    st.caption('CPU inference · ' + ('generated-fixture demonstration' if hosted else 'local session · bottle category'))
     if not models:
         st.warning('No model artifacts found. Train a baseline or feature model first; see README setup.')
         st.stop()

@@ -188,3 +188,7 @@ Remaining limitations: third-party dataset provenance; small single-category eva
 On the author's workspace, Edge Inspect is served at http://127.0.0.1:8503 to avoid an existing app on 8501. Use `--server.port 8503` with the native startup command when needed.
 
 For the actual local run described in this repository, the official-download redirect was unavailable, so a pinned third-party mirror was used. It passed mirror hash checks; those checks establish file transfer integrity relative to that mirror, not the publisher's authenticity. The pre-run snapshot identifies the dataset family as MVTec AD for the evaluator's mode guard, while acquisition provenance is carried separately in the manifest and model metadata. See the disclosure above and the archived provenance; do not infer publisher-authenticated “official” data from that software label.
+
+## Free public demo deployment
+
+A [Render Free configuration](render.yaml) is included. It generates a labeled synthetic-fixture baseline and displays the real frozen evaluation results separately; it does not ship or download the real bottle models. See [deployment instructions](docs/DEPLOYMENT.md#free-render-public-demo). Set `EDGE_INSPECT_PUBLIC_DEMO=1` for this mode. No live public URL is claimed until deployment is verified.

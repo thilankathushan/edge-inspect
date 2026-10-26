@@ -65,3 +65,25 @@ def test_real_model_discovery_precedes_fixtures(tmp_path):
         target.mkdir(parents=True)
         (target/'metadata.json').write_text(json.dumps({'method':'rgb-mean-template-v1','data_kind':kind}))
     assert [meta['data_kind'] for _,meta in discover(tmp_path)]==['official_mvtec_ad','synthetic_fixture']
+
+
+def test_public_demo_filters_real_artifacts_and_shows_recorded_results(demo_artifact,monkeypatch):
+    pytest.importorskip('streamlit')
+    from streamlit.testing.v1 import AppTest
+    from edge_inspect.baseline import read_json
+    project=Path(__file__).resolve().parents[1]
+    metadata=read_json(demo_artifact/'metadata.json')
+    monkeypatch.setenv('EDGE_INSPECT_PUBLIC_DEMO','1')
+    monkeypatch.setattr('edge_inspect.demo.discover',lambda root:[
+        (project/'artifacts/models/real',{**metadata,'data_kind':'official_mvtec_ad'}),
+        (project/'artifacts/models/generated',metadata)])
+    monkeypatch.setattr('edge_inspect.demo.load_model',lambda path:load_model(demo_artifact))
+    app=AppTest.from_file(str(project/'app.py')).run()
+    assert not app.exception
+    assert len(app.selectbox[0].options)==1
+    assert 'generated' in app.selectbox[0].options[0]
+    assert len(app.table)==1
+    assert any('Public software demo' in item.value for item in app.warning)
+    app.checkbox[0].check().run()
+    app.button[0].click().run(timeout=30)
+    assert not app.exception and len(app.metric)==4

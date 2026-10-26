@@ -1,0 +1,18 @@
+# Free public software demo. No real datasets or pretrained weights are fetched.
+services:
+  - type: web
+    name: edge-inspect-demo
+    runtime: python
+    plan: free
+    buildCommand: pip install '.[demo]' && python scripts/prepare_public_demo.py
+    startCommand: streamlit run app.py --server.address 0.0.0.0 --server.port $PORT --server.maxUploadSize 10
+    healthCheckPath: /_stcore/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.14.0
+      - key: EDGE_INSPECT_PUBLIC_DEMO
+        value: "1"
+      - key: OMP_NUM_THREADS
+        value: "1"
+      - key: OPENBLAS_NUM_THREADS
+        value: "1"

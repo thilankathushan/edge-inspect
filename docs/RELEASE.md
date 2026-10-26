@@ -25,12 +25,12 @@ The evaluation uses one category and modest samples. The 42-image calibration sa
 
 ONNX only contains the feature extractor and was slower end-to-end. RSS is whole-worker process memory; timing is warm, single-thread CPU. No camera, quantization, MPS, Raspberry Pi, other edge hardware, production security, robustness, load, or deployment-service tests are claimed. The captured GIF is a silent sequence of actual UI states, not a continuous narrated recording.
 
-Both images built and actual model inference smoke checks passed. Docker Desktop later became manually paused, so the HTTP health endpoint and Compose lifecycle remain unchecked after the build. Resume Docker Desktop to run `docker compose up -d` and `curl -fsS http://127.0.0.1:8501/_stcore/health` locally. Native Streamlit browser use passed on loopback port 8503.
+Both images built and actual model inference smoke checks passed. On 2026-10-26 Docker Desktop resumed: the existing test container reported `running healthy` and its loopback port 8502 health endpoint returned `ok`. The individual Docker container path is verified; a separate Compose lifecycle check is not claimed. Native Streamlit browser use passed on loopback port 8503.
 
 ## Optional owner actions
 
 - Record narration following DEMO_SCRIPT.md if a continuous video is useful for your portfolio.
 - Resolve dataset mirror authenticity and model-weight rights before any use that depends on publisher provenance, commercial use or redistribution.
-- Resume Docker Desktop and run the health command above if you plan to feature the container path.
+- Use the verified Docker setup if desired; check the deployment architecture when moving to another host.
 
 There is no required local action to view the source, read the results, or start the native demo with the author's ignored local artifacts present. A fresh clone does not include models; use the labeled fixture quickstart or acquire permitted data, fetch weights explicitly, and train locally.
